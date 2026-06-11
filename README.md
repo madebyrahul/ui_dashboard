@@ -10,3 +10,6 @@ Handled in a single `Sidebar.tsx` component using Tailwind breakpoints — no se
 ## Deployment
 
 Deployed on Vercel. Environment variables added via Vercel project settings.
+
+# Working link of project
+https://ui-dashboard-ebon.vercel.app/

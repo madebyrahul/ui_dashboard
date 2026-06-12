@@ -69,6 +69,7 @@ const CourseCard = ({ course, index }: CourseCardProps) => {
 
     const Icon = icons[course.icon_name as keyof typeof icons];
 
+
     return (
         <motion.div
             variants={item}

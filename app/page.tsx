@@ -2,17 +2,18 @@
 
 import ActivityTile from "@/components/ActivityTile";
 import CourseCard from "@/components/CourseCard";
+import CoursesGrid from "@/components/CoursesGrid";
+import CoursesSkeleton from "@/components/CourseSkeleton";
 import HeroTile from "@/components/HeroTile";
 import Sidebar from "@/components/Sidebar";
 import { Course } from "@/lib/interfaces";
 import { dataBase } from "@/lib/supabase";
 import { motion , Variants} from "framer-motion"
+import { Suspense } from "react";
 
 export default async function Home() {
 
-  const supabase = await dataBase()
-  const { data, error } = await supabase.from("courses").select("*").order("created_at", { ascending: true })
-  const courses: Course[] = data || []  
+  
 
   return (
     <div className="flex flex-col-reverse md:flex-row h-screen bg-[#0f0f11]">
@@ -27,23 +28,14 @@ export default async function Home() {
           })}
         </p>
 
-        {error && (
-          <div className="text-red-400 text-sm mb-3">
-            Failed to load courses: {error.message}
-          </div>
-        )}
+        
 
         <div className="flex flex-col md:flex-row gap-3 md:gap-[10px] text-white">
           <div className="flex flex-col gap-3 md:gap-[10px] flex-1">
             <HeroTile />
-            <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-[10px]">
-              {
-                courses.map((course, index) => (
-                  <CourseCard key={course.id} course={course} index={index} />
-                ))
-              }
-            </div>
+            <Suspense fallback={<CoursesSkeleton />}>
+               <CoursesGrid />
+            </Suspense>
           </div>
 
           <div className="w-full lg:w-[260px] shrink-0">
